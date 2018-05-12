@@ -7,15 +7,19 @@ use damianbal\Formy\TemplateInterface;
 use damianbal\Formy\FormField;
 use damianbal\Formy\Form;
 
+/**
+ * Basic HTML layout, you can style it with CSS
+ * formy-input-group for input group which has label, description and input field
+ * formy-input to style input field
+ * formy-button to style submit button
+ */
 class HTMLTemplate implements TemplateInterface
 {
-    public $submitButtonTitle = "";
-
-    public function getFormFieldString(FormField $formField)
+    public function getFormFieldString($formField)
     {
         return  "
-            <div>
-                <div><label>$formField->title</label></div>
+            <div class='formy-input-group'>
+                <div>" . $formField->getLabelString() . "</div>
                 <div>" . $formField->getInputString() . "</div>
             </div>
         ";
@@ -23,14 +27,14 @@ class HTMLTemplate implements TemplateInterface
 
     public function getTemplate(Form $form)
     {
-        $html = "<form>";
+        $html = "<form method='POST'>";
 
-        foreach($form->getFormFields() as $formField)
+        foreach($form->get()['fields'] as $formField)
         {
             $html .= $this->getFormFieldString($formField);
         }
 
-        $html .= "<br><button type='submit'>Submit</button>";
+        $html .= "<div class='formy-input-group'><button class='formy-button' type='submit'>".$form->getSubmitTitle()."</button></div>";
 
         $html .= "</form>";
 

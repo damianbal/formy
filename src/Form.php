@@ -41,6 +41,11 @@ class Form
         $this->submitTitle = $title;
     }
 
+    public function getSubmitTitle()
+    {
+        return $this->submitTitle;
+    }
+
     /**
      * StdClass object or array
      *
@@ -78,7 +83,12 @@ class Form
         return $this->formFields[$key];
     }
 
-    public function get()
+    /**
+     * Returns form data and form inputs
+     *
+     * @return array
+     */
+    public function get() : array
     {
         return [
             'form' => ['name' => $this->name, 'description' => $this->description],
@@ -93,6 +103,7 @@ class Form
      */
     public function build()
     {
+        /*
         if($this->dataSource != null)
         {
             if(is_array($this->dataSource))
@@ -105,14 +116,16 @@ class Form
             else if(is_object($this->dataSource))
             {
                 // TODO: implement...
+                foreach($this->formFields as $key => $value)
+                {
+                    if(isset($this->dataSource->{$key}))
+                        $this->formFields[$key]->value = $this->dataSource->{$key};
+                }
             }
-        }
-        // build the form, fetch data from data source, etc...
-
+        }*/
+   
         $tpl = $this->template->getTemplate($this);
 
-        // TODO: set values from source
-        // TODO: return template html string
         return $tpl;
     }
 }

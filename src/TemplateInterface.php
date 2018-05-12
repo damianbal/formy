@@ -14,7 +14,7 @@ interface TemplateInterface
      *
      * @return void
      */
-    public function getFormFieldString(FormField $formField);
+    public function getFormFieldString($formField);
 
     /**
      * Return string containg form

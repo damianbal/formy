@@ -39,4 +39,14 @@ final class FormFieldTest extends TestCase
         //$this->assertEquals("<input name='email' type='email'>", $formField->getInputString());
         //$this->assertEquals("<textarea name='blog_post'>xd</textarea>", $formField->getInputString());
     }
+
+    public function test_form_field_show_label_false_should_return_empty_string()
+    {
+        $formField = new FormField("firstName");
+
+        $formField->showLabel = false;
+        var_dump($formField->getLabelString());
+
+        $this->assertEquals(0, strlen($formField->getLabelString()));
+    }
 }

@@ -6,7 +6,7 @@ class FormField
 {
     public $name;
     public $title;
-    public $description;
+    public $description = null;
     public $type = "text";
     public $id = null;
     public $value = null;
@@ -14,7 +14,8 @@ class FormField
     public $validation_min;
     public $validation_max;
     public $validation_required = false;
-    public $options = [];
+    public $selection = [];
+    public $showLabel = true;
 
     public function __construct($name)
     {
@@ -29,6 +30,27 @@ class FormField
         {
             $this->{$key} = $value;
         }
+    }
+
+    /**
+     * Label for input
+     *
+     * @return void
+     */
+    public function getLabelString() : string
+    {
+        // this form field is hidden so we don't need label for it
+        if($this->type == 'hidden' || $this->showLabel == false) return "";
+
+        $label = "";
+        $label .= "<label >" . $this->title . "</label>";
+
+        if($this->description != null) 
+        {
+            $label .= "<div style='font-size:12px; color: rgba(0,0,0,0.3);' class='formy-desc'>" . $this->description . "</div>";
+        }
+
+        return $label;
     }
 
     /**
@@ -55,6 +77,19 @@ class FormField
         {
             return "";
         }   
+        else if($this->type == 'select' || $this->type == 'list')
+        {
+            $html = "<select $name>";
+
+            foreach($this->selection as $key => $value)
+            {
+                $h = ($this->value == $key) ? "<option value='$key' selected>$value</option>" : "<option value='$key'>$value</option>";
+                $html .= $h;
+            }
+
+            $html .= "</select>";
+            return $html;
+        }
         else 
         {
             // normal input 
