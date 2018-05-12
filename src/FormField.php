@@ -37,7 +37,7 @@ class FormField
      *
      * @return void
      */
-    public function getLabelString() : string
+    public function getLabelString($classList = "") : string
     {
         // this form field is hidden so we don't need label for it
         if($this->type == 'hidden' || $this->showLabel == false) return "";
@@ -47,18 +47,19 @@ class FormField
 
         if($this->description != null) 
         {
-            $label .= "<div style='font-size:12px; color: rgba(0,0,0,0.3);' class='formy-desc'>" . $this->description . "</div>";
+            $label .= "<div style='font-size:12px; color: rgba(0,0,0,0.3);' class='$classList'>" . $this->description . "</div>";
         }
 
         return $label;
     }
 
     /**
-     * HTML input tag string
+     * HTML input/textarea/checkbox/radio
      *
-     * @return void
+     * @param string $classList
+     * @return string
      */
-    public function getInputString() : string
+    public function getInputString($classList = "") : string
     {
         $value = ($this->value != null) ? "value='$this->value'" : '';
         $placeholder = ($this->placeholder != null) ? "placeholder='$this->placeholder'" : "";
@@ -71,11 +72,25 @@ class FormField
         }
         else if($this->type == 'radio')
         {   
-            return "";
+            $html = "";
+
+            foreach($this->selection as $key => $value)
+            {
+                $html .= "<input type='radio' $name value='$key'> $value ";
+            }
+
+            return $html;
         }
         else if($this->type == 'checkbox')
         {
-            return "";
+            $html = "";
+
+            foreach($this->selection as $key => $value)
+            {
+                $html .= "<input type='checkbox' $name value='$key'> $value ";
+            }
+
+            return $html;
         }   
         else if($this->type == 'select' || $this->type == 'list')
         {

@@ -20,7 +20,7 @@ class HTMLTemplate implements TemplateInterface
         return  "
             <div class='formy-input-group'>
                 <div>" . $formField->getLabelString() . "</div>
-                <div>" . $formField->getInputString() . "</div>
+                <div>" . $formField->getInputString('formy-input') . "</div>
             </div>
         ";
     }

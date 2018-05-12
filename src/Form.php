@@ -123,7 +123,16 @@ class Form
                 }
             }
         }*/
-   
+
+        // check if any fields have selection options but type is different
+        foreach($this->formFields as $formField)
+        {
+            if(count($formField->selection) > 0 && $formField->type != 'checkbox' || $formField->type != 'radio')
+            {
+                //$formField->type = 'radio';    
+            }
+        }
+        
         $tpl = $this->template->getTemplate($this);
 
         return $tpl;
