@@ -11,11 +11,12 @@ class FormField
     public $id = null;
     public $value = null;
     public $placeholder;
-    public $validation_min;
-    public $validation_max;
-    public $validation_required = false;
+    public $validation_min = null;
+    public $validation_max = null;
+    public $required = true;
     public $selection = [];
     public $showLabel = true;
+    public $disabled = false;
 
     public function __construct($name)
     {
@@ -76,7 +77,10 @@ class FormField
 
             foreach($this->selection as $key => $value)
             {
-                $html .= "<input type='radio' $name value='$key'> $value ";
+                $checked = "";
+                if($key == $this->value) $checked = "checked";
+
+                $html .= "<input type='radio' $name value='$key' $checked> $value ";
             }
 
             return $html;
@@ -87,7 +91,12 @@ class FormField
 
             foreach($this->selection as $key => $value)
             {
-                $html .= "<input type='checkbox' $name value='$key'> $value ";
+                $checked = "";
+                if(array_search($key, $this->value)) {
+                    $checked = "checked";
+                }   
+
+                $html .= "<input type='checkbox' $name value='$key' $checked> $value ";
             }
 
             return $html;
