@@ -8,7 +8,7 @@ use damianbal\Formy\FormField;
 use damianbal\Formy\Form;
 
 /**
- * HTML Layout with simple styling.
+ * HTML Template with simple styling.
  *
  *
  * @author     Damian Balandowski <balandowski@icloud.com>
