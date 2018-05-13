@@ -4,24 +4,30 @@ namespace damianbal\Formy;
 
 use damianbal\Formy\FormField;
 use damianbal\Formy\Templates\HTMLTemplate;
+use damianbal\Formy\FormyConfiguration;
 
+/**
+ * Form 
+ *
+ *
+ * @author     Damian Balandowski <balandowski@icloud.com>
+ * @copyright  2018 @ Damian Balandowski
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
+ * @version    1.0
+ * 
+ */
 class Form
 {
     protected $name = null;
     protected $description = null;
     protected $action = '';
-
     protected $formFields = [];
     protected $dataSource = null;
-
     protected $template = null;
-
     protected $submitTitle = "Submit";
 
     public function __construct($fields = [], $name = "", $action = "/")
     {
-        $this->setTemplate(new HTMLTemplate);
-
         $this->name = $name;
         $this->action = $action;
 
@@ -29,6 +35,11 @@ class Form
         {
             $this->addField($key, $field);
         }
+    }
+
+    public function getAction()
+    {
+        return $this->action;
     }
 
     public function getFormFields() 
@@ -99,11 +110,15 @@ class Form
     /**
      * Build the form
      *
-     * @return void
+     * @return string
      */
     public function build()
     {
-        /*
+        if($this->template == null)
+        {
+            $this->setTemplate(FormyConfiguration::getTemplate());
+        }
+
         if($this->dataSource != null)
         {
             if(is_array($this->dataSource))
@@ -113,23 +128,13 @@ class Form
                     $this->formFields[$key]->value = $value;
                 }
             }
-            else if(is_object($this->dataSource))
+            else 
             {
-                // TODO: implement...
                 foreach($this->formFields as $key => $value)
                 {
                     if(isset($this->dataSource->{$key}))
                         $this->formFields[$key]->value = $this->dataSource->{$key};
                 }
-            }
-        }*/
-
-        // check if any fields have selection options but type is different
-        foreach($this->formFields as $formField)
-        {
-            if(count($formField->selection) > 0 && $formField->type != 'checkbox' || $formField->type != 'radio')
-            {
-                //$formField->type = 'radio';    
             }
         }
         

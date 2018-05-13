@@ -7,9 +7,18 @@ use damianbal\Formy\Templates\HTMLTemplate;
 class FormyConfiguration
 {
     public static $defaultTemplate = 'damianbal\Formy\Templates\HTMLTemplate';
+    public static $template = null;
 
-    public static function setTemplate($template)
+    public static function setDefaultTemplate($class)
     {
-        FormyConfiguration::$defaultTemplate = $template;
+        FormyConfiguration::$defaultTemplate = $class;
+        FormyConfiguration::$template = null;
+    }
+
+    public static function getTemplate()
+    {
+        if(FormyConfiguration::$template == null) FormyConfiguration::$template = new FormyConfiguration::$defaultTemplate;
+
+        return FormyConfiguration::$template;
     }
 }

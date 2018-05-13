@@ -28,18 +28,6 @@ final class FormFieldTest extends TestCase
         $this->assertEquals("pass_id", $formField->id);
     }
 
-    public function test_get_input_string()
-    {
-        $formField = new FormField("email");
-        $formField2 = new FormField("blog_post");
-
-        $formField->createFromArray(['type' => 'email']);
-        $formField2->createFromArray(['type' => 'textarea', 'value' => 'xd']);
-
-        //$this->assertEquals("<input name='email' type='email'>", $formField->getInputString());
-        //$this->assertEquals("<textarea name='blog_post'>xd</textarea>", $formField->getInputString());
-    }
-
     public function test_form_field_show_label_false_should_return_empty_string()
     {
         $formField = new FormField("firstName");

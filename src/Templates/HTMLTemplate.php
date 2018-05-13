@@ -8,10 +8,14 @@ use damianbal\Formy\FormField;
 use damianbal\Formy\Form;
 
 /**
- * Basic HTML layout, you can style it with CSS
- * formy-input-group for input group which has label, description and input field
- * formy-input to style input field
- * formy-button to style submit button
+ * HTML Layout with simple styling.
+ *
+ *
+ * @author     Damian Balandowski <balandowski@icloud.com>
+ * @copyright  2018 @ Damian Balandowski
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
+ * @version    1.0
+ * 
  */
 class HTMLTemplate implements TemplateInterface
 {
@@ -27,7 +31,7 @@ class HTMLTemplate implements TemplateInterface
 
     public function getTemplate(Form $form)
     {
-        $html = "<form method='POST'>";
+        $html = "<form action='$form->getAction()' method='POST'>";
 
         foreach($form->get()['fields'] as $formField)
         {

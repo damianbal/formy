@@ -5,7 +5,14 @@ namespace damianbal\Formy;
 use damianbal\Formy\Form;
 
 /**
- * Layout your forms using that interface
+ * TemplateInterface - Implement this interface to make different templates for Formy forms.
+ *
+ *
+ * @author     Damian Balandowski <balandowski@icloud.com>
+ * @copyright  2018 @ Damian Balandowski
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
+ * @version    1.0
+ * 
  */
 interface TemplateInterface
 {

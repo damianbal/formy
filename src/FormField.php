@@ -2,6 +2,17 @@
 
 namespace damianbal\Formy;
 
+/**
+ * FormField which is set of input and label composed into input group.
+ *
+ *
+ * @author     Damian Balandowski <balandowski@icloud.com>
+ * @copyright  2018 @ Damian Balandowski
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
+ * @version    1.0
+ * 
+ */
+
 class FormField
 {
     public $name;
@@ -11,8 +22,11 @@ class FormField
     public $id = null;
     public $value = null;
     public $placeholder;
-    public $validation_min = null;
-    public $validation_max = null;
+    public $min = null;
+    public $max = null;
+    public $maxlength = null;
+    public $minlength = null;
+    public $accept = "";
     public $required = true;
     public $selection = [];
     public $showLabel = true;
@@ -62,14 +76,18 @@ class FormField
      */
     public function getInputString($classList = "") : string
     {
-        $value = ($this->value != null) ? "value='$this->value'" : '';
-        $placeholder = ($this->placeholder != null) ? "placeholder='$this->placeholder'" : "";
+        $value = $this->getAttribute('value', $this->value); 
+        $placeholder = $this->getAttribute('placeholder', $this->placeholder);
         $name = "name='$this->name'";
         $type = "type='$this->type'";
+        $id = $this->getAttribute('id', $this->id);
+        
+        $disabled = $this->disabled ? "disabled" : "";
+        $required = $this->required ? "required" : "";
 
         if($this->type == 'textarea')
         {
-            return "<textarea $name $placeholder>$value</textarea>";
+            return "<textarea $id $name $placeholder $required>$value</textarea>";
         }
         else if($this->type == 'radio')
         {   
@@ -80,7 +98,7 @@ class FormField
                 $checked = "";
                 if($key == $this->value) $checked = "checked";
 
-                $html .= "<input type='radio' $name value='$key' $checked> $value ";
+                $html .= "<input $id type='radio' $name value='$key' $checked> $value ";
             }
 
             return $html;
@@ -92,18 +110,21 @@ class FormField
             foreach($this->selection as $key => $value)
             {
                 $checked = "";
-                if(array_search($key, $this->value)) {
-                    $checked = "checked";
-                }   
+                if($this->value != null)
+                {
+                    if(in_array($key, $this->value)) {
+                        $checked = "checked";
+                    }   
+                }
 
-                $html .= "<input type='checkbox' $name value='$key' $checked> $value ";
+                $html .= "<input $id type='checkbox' $name value='$key' $checked> $value ";
             }
 
             return $html;
         }   
         else if($this->type == 'select' || $this->type == 'list')
         {
-            $html = "<select $name>";
+            $html = "<select $id $name>";
 
             foreach($this->selection as $key => $value)
             {
@@ -117,7 +138,19 @@ class FormField
         else 
         {
             // normal input 
-            return "<input $name $type $placeholder $value>";
+            return "<input $id $name $type $placeholder $value $required>";
         }
+    }
+
+    /**
+     * If attribute is not set then return empty string, if it is set then return html attribute string.
+     *
+     * @param string $attribute_name
+     * @param string $attribute_value
+     * @return string
+     */
+    private function getAttribute($attribute_name, $attribute_value) : string
+    {
+        return ($attribute_value != null) ? "$attribute_name='$attribute_value'" : "";
     }
 }
